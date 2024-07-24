@@ -216,7 +216,7 @@ func setWallpaper(desktop, pic, opts, cmd string) {
 		errChk(status, err)
 	case "xfce":
 		setXfceWallpaper(pic)
-	case "kde4", "plasma6":
+	case "kde4", "plasma5", "plasma6":
 		setPlasmaWallpaper(pic, desktop)
 	case "none":
 	default:
@@ -259,7 +259,7 @@ func setPlasmaWallpaper(pic, env string) {
 		errChk(status, err)
 		_, status, err = exec.Exec3("/usr/bin/xdotool", "search", "--name", window, "windowactivate", "key", "ctrl+e", "key", "ctrl+w")
 		errChk(status, err)
-	case "plasma6":
+	case "plasma5", "plasma6":
 		// https://gist.github.com/marguerite/34d687cfaa88888f17bc0777a1c40509
 		script = "for (i in activities()) { activityID = activities()[i]; desktops = desktopsForActivity(activityID); for (j in desktops) { desktop = desktops[j]; desktop.wallpaperPlugin = \"org.kde.image\"; desktop.wallpaperMode = \"Scaled and Cropped\"; desktop.currentConfigGroup = new Array(\"Wallpaper\", \"org.kde.image\", \"General\"); desktop.writeConfig(\"Image\", \"file://" + pic + "\");}}"
 		out, status, err := exec.Exec3("/usr/bin/qdbus-qt5", "org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell.evaluateScript", script)
