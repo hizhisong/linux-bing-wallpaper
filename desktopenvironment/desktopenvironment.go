@@ -22,8 +22,8 @@ func Name() string {
 	// assign env in detail
 	switch strings.ToLower(env) {
 	case "kde":
-		if isPlasma5() {
-			env = "plasma5"
+		if isPlasma6() {
+			env = "plasma6"
 			break
 		}
 		env = "kde4"
@@ -41,8 +41,8 @@ func Name() string {
 		// kde
 		_, err := exec.Env("KDE_FULL_SESSION")
 		if err != nil {
-			if isPlasma5() {
-				env = "plasma5"
+			if isPlasma6() {
+				env = "plasma6"
 				break
 			}
 			env = "kde4"
@@ -87,7 +87,7 @@ func Name() string {
 	return env
 }
 
-func isPlasma5() bool {
+func isPlasma6() bool {
 	if _, err := os.Stat("/usr/bin/plasmashell"); os.IsNotExist(err) {
 		return false
 	}
@@ -96,7 +96,7 @@ func isPlasma5() bool {
 		return false
 	}
 	ver := strings.TrimPrefix(string(out), "plasmashell ")
-	if len(ver) > 0 && strings.HasPrefix(ver, "5") {
+	if len(ver) > 0 && strings.HasPrefix(ver, "6") {
 		return true
 	}
 	return false
